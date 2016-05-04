@@ -6,7 +6,7 @@
 * You should fork and clone this repo. You should also configure an `upstream` repo, to be able to pull updates that we will publish in this original repo.
 * There will not be a "full" lab grade for this long lab. However, there will *at least* one point to gain for the "salami" TE grade. Also, the skills that you will learn during this lab will be necessary for subsequent labs.
 * We expect that you will have more issues and questions than with other labs (because we have a left some questions open on purpose). Please ask your questions on telegram or in the forum, so that everyone in the class can benefit from the discussion.
- 
+
 ## Objectives
 
 This lab has 4 objectives:
@@ -107,13 +107,13 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? |
 | | *Insert your diagram here...* |
 |Question | Who is going to **send UDP datagrams** and **when**? |
-| | *Enter your response here...* |
+| | Le musicien doit émettre un son (paquet UDP), toutes les secondes. |
 |Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received? |
-| | *Enter your response here...* |
+| | L'auditeur écoute les musiciens et affiche le son de leurs instruments. Si un musicien n'émet pas de son durant 10 secondes, il est considéré comme inactif. |
 |Question | What **payload** should we put in the UDP datagrams? |
-| | *Enter your response here...* |
+| | Une structure caractérisant le musicien (Un UUID, un instrument). |
 |Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
-| | *Enter your response here...* |
+| | Le musicien (expéditeur) envoit et met-à-jours des paquet UDP toutes les secondes. A ce stade aucune requête n'est émise de la part de l'auditeur. |
 
 
 ## Task 2: implement a "musician" Node.js application
@@ -121,21 +121,21 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic
 | ---  | ---
 |Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**?
-| | *Enter your response here...*
+| | En appelant la fonction JSON.stringify(object)
 |Question | What is **npm**?
-| | *Enter your response here...*
+| | **npm** est un gestionnaire de module JavaScript.
 |Question | What is the `npm install` command and what is the purpose of the `--save` flag?
-| | *Enter your response here...*
+| | La commande 'install' permet d'automatiquement télécharger et installer un module. Le flag --save permet d'installer le module en tant que dépendance.
 |Question | How can we use the `https://www.npmjs.com/` web site?
-| | *Enter your response here...*
+| | On peut l'utiliser pour trouver des modules JavaScript afin de les installer ultérieurement. Toutefois, une méthode plus simple consiste à utiliser la commande : `$ npm search <mots-clefs>`
 |Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122?
-| | *Enter your response here...*
+| | Le module 'uuid' permet d'opérer sur ces chaîne de caractères. Il faut ensuite l'utiliser comme suit `var monUUID = uuid.v4()`
 |Question | In Node.js, how can we execute a function on a **periodic** basis?
-| | *Enter your response here...*
+| | Grâce à la fonction setInterval(). Elle prend en paramêtre une fonction.
 |Question | In Node.js, how can we **emit UDP datagrams**?
-| | *Enter your response here...*
+| | D'une part il faut utiliser le module 'udpv4'. Ensuite après avoir générer un datagrame, il faut l'envoyer avec la méthode send.
 |Question | In Node.js, how can we **access the command line arguments**?
-| | *Enter your response here...*
+| | Grâce à la fonction process(argv[x]) où x désigne la position du paramètre.
 
 
 ## Task 3: package the "musician" app in a Docker image
@@ -162,13 +162,13 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | ---  | ---
 |Question | With Node.js, how can we listen for UDP datagrams in a multicast group?
 | | *Enter your response here...*
-|Question | How can we use the `Map` built-in object introduced in ECMAScript 6 to implement a **dictionary**? 
+|Question | How can we use the `Map` built-in object introduced in ECMAScript 6 to implement a **dictionary**?
 | | *Enter your response here...*
-|Question | How can we use the `Moment.js` npm module to help us with **date manipulations** and formatting? 
+|Question | How can we use the `Moment.js` npm module to help us with **date manipulations** and formatting?
 | | *Enter your response here...*
-|Question | When and how do we **get rid of inactive players**? 
+|Question | When and how do we **get rid of inactive players**?
 | | *Enter your response here...*
-|Question | How do I implement a **simple TCP server** in Node.js? 
+|Question | How do I implement a **simple TCP server** in Node.js?
 | | *Enter your response here...*
 
 
@@ -203,4 +203,3 @@ Have a look at the `validate.sh` script located in the top-level directory. This
 |04.05.2016 | PM | Activities 3 and 4
 |11.05.2016 | AM | There will be a **written test** on everything that we have studied so far (travail écrit).
 |11.05.2016 | PM | Validation and demonstrations.
-
