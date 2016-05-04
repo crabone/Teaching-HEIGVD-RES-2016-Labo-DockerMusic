@@ -105,7 +105,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | --- | --- |
 |Question | How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? |
-| | *Insert your diagram here...* |
+| | ![diagramme](https://github.com/crabone/Teaching-HEIGVD-RES-2016-Labo-DockerMusic/blob/master/images/diagram.png) |
 |Question | Who is going to **send UDP datagrams** and **when**? |
 | | Le musicien doit émettre un son (paquet UDP), toutes les secondes. |
 |Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received? |
