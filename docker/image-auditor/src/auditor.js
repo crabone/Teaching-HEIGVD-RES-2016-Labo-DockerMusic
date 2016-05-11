@@ -11,21 +11,6 @@ var Musician = function(uuid, sound, activeSince, lastKeepAlive) {
   this.lastKeepAlive = lastKeepAlive;
 }
 
-var updateActivity = function() {
-  this.prototype.update = function() {
-    console.log("test");
-    activeMusicians.forEach(function(activeMusician, index, array) {
-      var duration = Date.now() - activeMusician.lastKeepAlive;
-
-      if (duration >= 5000) {
-        activeMusicians.delete(index);
-      }
-    });
-  }
-
-  setInterval(this.update.bind(this), 1000);
-};
-
 // UDP Client
 var protocol = require('./auditorium-protocol');
 
@@ -45,29 +30,34 @@ socket.on('message', function(msg, source) {
   if (activeMusicians.has(musician.uuid)) {
     activeMusicians.get(musician.uuid).lastKeepAlive = Date.now();
   } else {
-    activeMusicians.set(musician.uuid, new Musician(musician.uuid, instruments[musician.instrument], Date.now(), Date.now()));
+    activeMusicians.set(musician.uuid, new Musician(musician.uuid, musician.instrument, Date.now(), Date.now()));
   }
 });
 
 // TCP Server
 var net = require('net');
 var server = net.createServer();
+var serial = [];
 
 server.on('connection', sendActivesMusicians);
 server.listen(2205);
 
 function sendActivesMusicians(client) {
-  //client.write(JSON.stringify([...activeMusicians]));
-
-  client.write("[");
+  var serial = [];
   activeMusicians.forEach(function(activeMusician, index, array) {
-    var m = {
-      uuid: activeMusician.uuid,
-      sound: activeMusician.sound,
-      activeSince: new Date(activeMusician.activeSince)
-    };
-    client.write(JSON.stringify(m) + "\n");
+    var duration = Date.now() - activeMusician.lastKeepAlive;
+
+    if (duration >= 5000) {
+      activeMusicians.delete(index);
+    }
+    else {
+      var m = {
+        uuid: activeMusician.uuid,
+        instrument: activeMusician.sound,
+        activeSince: new Date(activeMusician.activeSince)
+      };
+      serial.push(m);
+    }
   });
-  client.write("]");
-  
+  client.end(JSON.stringify(serial));
 }
